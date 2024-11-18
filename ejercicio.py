@@ -14,7 +14,7 @@ try:
     locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
 except locale.Error:
     locale.setlocale(locale.LC_ALL, 'C')
-    
+
 st.title("Datos del alumno")
 def mostrar_informacion_alumno():
     with st.container(border=True):
@@ -56,7 +56,7 @@ if archivo_csv:
         # Rellenar los NaN (primer mes) con 0
         df_grouped.fillna(0, inplace=True)
 
-        precio_promedio = df_grouped["Precio_promedio"]
+        precio_promedio = df_grouped["Precio_promedio"].mean()
         margen_promedio = df_grouped["Margen_promedio"]
         unidades_vendidas = datosProductos["Unidades_vendidas"].sum()
 
@@ -85,9 +85,9 @@ if archivo_csv:
             col1, col2 = st.columns([1,3])
 
             with col1:
-                st.metric("Precio Promedio",f"${locale.format_string("%d", precio_promedio.mean(), grouping = True)}", f"{variacion_precio_promedio:.2f}%")
+                st.metric("Precio Promedio",f"${precio_promedio:,.2f}".replace(",","."), f"{variacion_precio_promedio:.2f}%")
                 st.metric("Margen Promedio", f"{margen_promedio.mean():.0f}%", f"{variacion_margen_promedio:.2f}%")
-                st.metric("Unidades Vendidas", f"{locale.format_string("%d", unidades_vendidas, grouping = True)}", f"{variacion_unidades_vendidas:.2f}%")
+                st.metric("Unidades Vendidas", f"{unidades_vendidas:,.0f}".replace(",","."), f"{variacion_unidades_vendidas:.2f}%")
 
             with col2:
                 fig.set_size_inches(10,5)
