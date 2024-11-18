@@ -10,8 +10,11 @@ from scipy.stats import linregress
 # url = 'https://tp8-555555.streamlit.app/'
 
 st.set_page_config(layout="wide")
-locale.setlocale(locale.LC_ALL, 'es_AR.UTF-8')
-
+try:
+    locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
+except locale.Error:
+    locale.setlocale(locale.LC_ALL, 'C')
+    
 st.title("Datos del alumno")
 def mostrar_informacion_alumno():
     with st.container(border=True):
